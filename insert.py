@@ -1,20 +1,31 @@
 import pymongo
 
-# Connect to the database
-client = pymongo.MongoClient('mongodb://localhost:27017/')
+def run(client_link,name, amount):
+    client = pymongo.MongoClient(client_link)
 
-# Connect to the 'test' database
-db = client['test']
+    db = client['test']
 
-# Get the 'users' collection
-users = db['accounts']
+    users = db['accounts']
 
-# Insert a single document
-if users.find({'name': '12A45ALENROYTHOMAS'}) == None:
-    result = users.insert_one({
-        'name': '12A45ALENROYTHOMAS',
-        'amount': 100
-    })
-    print(result.inserted_id)
+    add = amount
+    cursor = users.count_documents({'name' : name})
 
-client.close()
+    if cursor == 0:
+        result = users.insert_one({
+            'name': name,
+            'amount': amount})
+        print("New Account Created, Balance: 100")
+        dialogue ="New Account Created, Balance: 100\n"
+    else:
+        find = users.find({'name': name})
+
+        for doc in find:
+            add = doc['amount']+add
+        users.update_one({'name' : name}, {'$set' : {'amount' : add}})
+        print(f"Balance: {add}")
+        dialogue = f"Balance: {add}\n"
+
+    client.close()
+    return dialogue
+
+#run('mongodb://localhost:27017/','12A45ALENROYTHOMAS',100)
