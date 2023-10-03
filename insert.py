@@ -9,11 +9,12 @@ db = client['test']
 # Get the 'users' collection
 users = db['accounts']
 
-# Find all documents
-cursor = users.find({'name': '12A45ALENROYTHOMAS'})
-
-# Iterate over the cursor and print the documents
-for doc in cursor:
-    print(doc['amount'])
+# Insert a single document
+if users.find({'name': '12A45ALENROYTHOMAS'}) == None:
+    result = users.insert_one({
+        'name': '12A45ALENROYTHOMAS',
+        'amount': 100
+    })
+    print(result.inserted_id)
 
 client.close()
