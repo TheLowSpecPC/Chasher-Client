@@ -14,4 +14,4 @@ def run(com):
             return re
         time.sleep(1)
 
-#run("COM1")
+#run("COM5")

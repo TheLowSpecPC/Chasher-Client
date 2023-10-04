@@ -14,8 +14,8 @@ def run(client_link,name, amount):
         result = users.insert_one({
             'name': name,
             'amount': amount})
-        print("New Account Created, Balance: 100")
-        dialogue ="New Account Created, Balance: 100\n"
+        print(f"New Account Created, Balance: {amount}")
+        dialogue =f"New Account Created, Balance: {amount}\n"
     else:
         find = users.find({'name': name})
 
