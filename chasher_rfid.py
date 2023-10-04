@@ -31,6 +31,8 @@ def money(no):
         amount = 0
     com = a.get()
     name = rfid_reader.run(com)
+    cmd.insert(END, f"Unique ID: {name}")
+    cmd.see("end")
 
     if no == 1:
         line = insert.run(client_link,name,amount)
@@ -40,7 +42,6 @@ def money(no):
         line = delete_acc.run(client_link,name)
 
     cmd.insert(END, line)
-    cmd.see("end")
 
 def temp_text1(e):
     b.delete(0,"end")
